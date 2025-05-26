@@ -109,12 +109,17 @@ impl OAuth2PrivateCookieJarTrait for OAuth2PrivateCookieJar {
             .unwrap_or_else(|| "http://localhost:5150/oauth2/protected".to_string());
         let protected_url = url::Url::parse(&protected_url)
             .map_err(|_e| loco_rs::errors::Error::InternalServerError)?;
-        let protected_domain = protected_url.domain().unwrap_or("localhost");
+        let protected_domain = protected_url.host().ok_or_else(|| {
+            loco_rs::errors::Error::Message(format!(
+                "Error parsing host from protected url: {}",
+                protected_url
+            ))
+        })?;
         let protected_path = protected_url.path();
         // Create the cookie with the session id, domain, path, and secure flag from
         // the token and profile
         let cookie = cookie::Cookie::build((COOKIE_NAME, token.access_token().secret().to_owned()))
-            .domain(protected_domain.to_owned())
+            .domain(protected_domain.to_string())
             .path(protected_path.to_owned())
             // secure flag is for https - https://datatracker.ietf.org/doc/html/rfc6749#section-3.1.2.1
             .secure(true)

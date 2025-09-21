@@ -18,16 +18,23 @@ opt-level = 1
 [profile.dev.package."*"]
 opt-level = 3
 
+[features]
+default = ["use_tower_sessions"]
+use_tower_sessions = ["dep:tower-sessions"]
+axum_session = ["dep:axum_session"]
+
 [dependencies]
 async-trait = "0.1"
 async-std = { version = "1", features = ["attributes", "tokio1"] }
 axum = "0.8"
 axum-extra = { version = "0.10", features = ["cookie", "cookie-private"] }
-# axum session
-axum_session = { version = "0.16" }
+# axum session (optional, enabled by default)
+axum_session = { version = "0.16", optional = true }
+# tower-sessions (optional, enabled with use_tower_sessions feature)
+tower-sessions = { version = "0.14", optional = true }
 cookie = { version = "0.18", features = ["private"] }
 http = "1.1"
-loco-rs = { version = "0.15" }
+loco-rs = { version = "0.16.3" }
 oauth2 = "5.0"
 reqwest = { version = "0.12", features = ["json"] }
 sea-orm = { version = "1.0.0-rc.4", features = [

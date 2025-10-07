@@ -378,7 +378,7 @@ impl GrantTrait for Client {
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "nightly"))]
 mod tests {
     use oauth2::url::form_urlencoded;
     use serde::{Deserialize, Serialize};

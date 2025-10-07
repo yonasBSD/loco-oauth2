@@ -96,6 +96,10 @@ impl OAuth2ClientStore {
     ///
     /// # Returns
     /// * `OAuth2StoreResult<&AuthorizationCodeClient>` - A result that holds a reference to the `AuthorizationCodeClient` if found, otherwise an `OAuth2StoreError`.
+    ///
+    /// # Errors
+    /// * Returns `OAuth2StoreError::ClientNotFound` if the client is not found
+    /// * Returns `OAuth2StoreError::ClientTypeMismatch` if the client exists but is not an Authorization Code Grant client
     #[tracing::instrument(name = "Get Authorization Code Grant client", skip(self))]
     pub async fn get_authorization_code_client<T: AsRef<str> + std::fmt::Debug + Send>(
         &self,

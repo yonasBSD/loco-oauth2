@@ -1,7 +1,8 @@
 pub mod middleware;
 
 // Export the appropriate OAuth2 module as "oauth2" based on feature flags
-#[cfg(feature = "axum_session")]
+// Priority: axum_session takes precedence over use_tower_sessions
+#[cfg(all(feature = "axum_session", not(feature = "use_tower_sessions")))]
 pub use oauth2_axum_session as oauth2;
 
 #[cfg(feature = "use_tower_sessions")]

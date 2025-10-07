@@ -30,6 +30,8 @@ pub struct AuthParams {
 /// * `oauth2_client` - The `AuthorizationCodeGrant` client
 /// # Returns
 /// * `String` - The authorization URL
+/// # Errors
+/// * Returns `Error::InternalServerError` if session insertion fails
 pub async fn get_authorization_url(
     session: Session,
     oauth2_client: &mut MutexGuard<'_, dyn GrantTrait>,

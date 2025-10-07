@@ -49,7 +49,7 @@ impl OAuth2ClientStore {
     /// Insert Authorization Code Grant client into the store.
     ///
     /// # Arguments
-    /// `clients` - A BTreeMap that holds the client id and `OAuth2ClientGrantEnum`.
+    /// `clients` - A `BTreeMap` that holds the client id and `OAuth2ClientGrantEnum`.
     /// `authorization_code` - A vector of `AuthorizationCodeConfig` that holds the client configuration.
     #[tracing::instrument(
         name = "Insert Authorization Code Grant client",

@@ -180,7 +180,7 @@ pub trait GrantTrait: Send + Sync {
     /// Get authorization URL
     /// # Returns
     /// A tuple containing the authorization URL and the CSRF token.
-    /// [`Url`] is used to redirect the user to the OAuth2
+    /// [`Url`] is used to redirect the user to the `OAuth2`
     /// provider's login page.
     /// [`CsrfToken`] is used to verify the user
     /// when they return to the application. Needs to be stored in the session
@@ -247,11 +247,11 @@ pub trait GrantTrait: Send + Sync {
         (auth_url, csrf_token)
     }
     /// Verify code from the provider callback request after returns from the
-    /// OAuth2 provider's login page.
+    /// `OAuth2` provider's login page.
     /// # Arguments
-    /// * `code` - A string containing the code returned from the OAuth2
+    /// * `code` - A string containing the code returned from the `OAuth2`
     ///   provider callback request query.
-    /// * `state` - A string containing the state returned from the OAuth2
+    /// * `state` - A string containing the state returned from the `OAuth2`
     ///   provider response which extracted from the provider callback request
     ///   query.
     /// * `csrf_token` - A string containing the CSRF token saved in the
@@ -259,8 +259,8 @@ pub trait GrantTrait: Send + Sync {
     ///   [`Client::get_authorization_url`] method.
     /// # Returns
     /// A tuple containing the token response and the profile response.
-    /// [`BasicTokenResponse`] is the token response from the OAuth2 provider.
-    /// [`Response`] is the profile response from the OAuth2 provider which
+    /// [`BasicTokenResponse`] is the token response from the `OAuth2` provider.
+    /// [`Response`] is the profile response from the `OAuth2` provider which
     /// describes the user's profile. This response json information will be
     /// determined by [`Client::scopes`] # Errors
     /// An [`OAuth2ClientError::CsrfTokenError`] if the csrf token is invalid.
@@ -345,11 +345,8 @@ pub trait GrantTrait: Send + Sync {
             return Err(OAuth2ClientError::CsrfTokenError);
         }
         // Get the pkce_verifier for exchanging code
-        let (pkce_verifier, _) = match client.flow_states.remove(&csrf_token) {
-            None => {
-                return Err(OAuth2ClientError::CsrfTokenError);
-            }
-            Some(item) => item,
+        let Some((pkce_verifier, _)) = client.flow_states.remove(&csrf_token) else {
+            return Err(OAuth2ClientError::CsrfTokenError);
         };
         // Exchange the code with a token
         let token = client
@@ -378,7 +375,7 @@ impl GrantTrait for Client {
     }
 }
 
-#[cfg(all(test, feature = "nightly"))]
+#[cfg(test)]
 mod tests {
     use oauth2::url::form_urlencoded;
     use serde::{Deserialize, Serialize};

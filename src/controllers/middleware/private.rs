@@ -158,7 +158,7 @@ mod tests {
     use axum_extra::extract::PrivateCookieJar;
     use axum_test::TestServer;
     use http::header::{HeaderValue, COOKIE};
-    use loco_rs::config::{Config, Database, Logger, Server, Workers};
+    use loco_rs::config::{CacheConfig, Config, Database, InMemCacheConfig, Logger, Server, Workers};
     use loco_rs::controller::middleware::{self, request_id::RequestId};
     use loco_rs::environment::Environment;
     use loco_rs::storage::Storage;
@@ -166,6 +166,8 @@ mod tests {
     use sea_orm::DatabaseConnection;
     use serde_json::json;
     use std::collections::BTreeMap;
+    use std::sync::Arc;
+    use loco_rs::app::SharedStore;
 
     // Helper function to create a Key for encryption/decryption
     fn create_key() -> Key {
@@ -211,6 +213,7 @@ mod tests {
                     auto_migrate: false,
                     dangerously_truncate: false,
                     dangerously_recreate: false,
+                    run_on_start: None,
                 },
                 auth: None,
                 workers: Workers::default(),
@@ -218,10 +221,12 @@ mod tests {
                 settings: None,
                 queue: None,
                 scheduler: None,
+                cache: CacheConfig::InMem(InMemCacheConfig { max_capacity: 64 }),
             },
             mailer: None,
             storage: Storage::single(storage::drivers::null::new()).into(),
             cache: cache::Cache::new(cache::drivers::null::new()).into(),
+            shared_store: Arc::new(SharedStore::default()),
         }
     }
     fn cookies_from_request(headers: &HeaderMap) -> impl Iterator<Item = Cookie<'static>> + '_ {

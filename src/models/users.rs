@@ -2,15 +2,15 @@ use loco_rs::model::ModelResult;
 use loco_rs::prelude::*;
 use sea_orm::DatabaseConnection;
 
-/// Trait for OAuth2 user.
+/// Trait for `OAuth2` user.
 /// # Generic
-/// * `T` - Should implement `DeserializeOwned` OAuth2 User Profile requested to OAuth2 provider, this depends on the scope set on the application.
+/// * `T` - Should implement `DeserializeOwned` `OAuth2` User Profile requested to `OAuth2` provider, this depends on the scope set on the application.
 #[async_trait]
 pub trait OAuth2UserTrait<T>: Clone {
-    /// Asynchronously finds user by OAuth2 session id.
+    /// Asynchronously finds user by `OAuth2` session id.
     /// # Arguments
     /// * `db` - Database connection
-    /// * `cookie` - OAuth2 session id
+    /// * `cookie` - `OAuth2` session id
     ///
     /// # Returns
     /// * `Self` - The `OAuth2UserTrait` struct

@@ -111,8 +111,7 @@ impl OAuth2PrivateCookieJarTrait for OAuth2PrivateCookieJar {
             .map_err(|_e| loco_rs::errors::Error::InternalServerError)?;
         let protected_domain = protected_url.host().ok_or_else(|| {
             loco_rs::errors::Error::Message(format!(
-                "Error parsing host from protected url: {}",
-                protected_url
+                "Error parsing host from protected url: {protected_url}"
             ))
         })?;
         let protected_path = protected_url.path();

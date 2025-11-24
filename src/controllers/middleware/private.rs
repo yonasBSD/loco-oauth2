@@ -157,6 +157,7 @@ mod tests {
     use axum_extra::extract::PrivateCookieJar;
     use axum_test::TestServer;
     use http::header::{HeaderValue, COOKIE};
+    use loco_rs::app::SharedStore;
     use loco_rs::config::{
         CacheConfig, Config, Database, InMemCacheConfig, Logger, Server, Workers,
     };
@@ -214,7 +215,7 @@ mod tests {
                     auto_migrate: false,
                     dangerously_truncate: false,
                     dangerously_recreate: false,
-                    run_on_start: false,
+                    run_on_start: None,
                 },
                 auth: None,
                 workers: Workers::default(),
@@ -228,6 +229,7 @@ mod tests {
             mailer: None,
             storage: Storage::single(storage::drivers::null::new()).into(),
             cache: cache::Cache::new(cache::drivers::null::new()).into(),
+            shared_store: Arc::new(SharedStore::default()),
         }
     }
     fn cookies_from_request(headers: &HeaderMap) -> impl Iterator<Item = Cookie<'static>> + '_ {

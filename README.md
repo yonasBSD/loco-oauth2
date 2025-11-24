@@ -28,12 +28,13 @@ Grant, Implicit Grant and more are planned for future releases.
 ## Table of Contents
 
 1. [Installation](#installation)
-2. [Glossary](#glossary)
-3. [Configuration (Authorization Code Grant)](#configuration-authorization-code-grant)
-4. [Initialization](#initialization)
-5. [Migration](#migration)
-6. [Models](#models)
-7. [Controllers](#controllers)
+2. [Feature Flags](#feature-flags)
+3. [Glossary](#glossary)
+4. [Configuration (Authorization Code Grant)](#configuration-authorization-code-grant)
+5. [Initialization](#initialization)
+6. [Migration](#migration)
+7. [Models](#models)
+8. [Controllers](#controllers)
 
 <a name="installation"></a>
 
@@ -54,6 +55,47 @@ loco-oauth2 = { version = "0.4" }
 [dependencies]
 loco-oauth2 = { workspace = true }
 ```
+
+<a name="feature-flags"></a>
+
+## Feature Flags
+
+This library supports two session management backends through feature flags:
+
+- `use_tower_sessions` (default) - Uses `tower-sessions` for session management
+- `axum_session` - Uses `axum-session` for session management
+
+### Important Limitations
+
+⚠️ **Feature Flag Conflict**: These features are mutually exclusive. If both features are enabled simultaneously, the `axum_session` feature takes precedence over `use_tower_sessions`.
+
+### Usage
+
+**Default (tower-sessions):**
+```toml
+[dependencies]
+loco-oauth2 = "0.4"
+```
+
+**With axum-session:**
+```toml
+[dependencies]
+loco-oauth2 = { version = "0.4", features = ["axum_session"], default-features = false }
+```
+
+**Explicit tower-sessions:**
+```toml
+[dependencies]
+loco-oauth2 = { version = "0.4", features = ["use_tower_sessions"] }
+```
+
+### Migration Between Features
+
+When switching between session backends, you may need to:
+
+1. Update your session store initialization code
+2. Update controller imports and function calls
+3. Ensure your database schema is compatible with the chosen backend
 
 <a name="glossary"></a>
 

@@ -18,6 +18,14 @@ opt-level = 1
 [profile.dev.package."*"]
 opt-level = 3
 
+[lints.rust]
+rust_2018_idioms = "warn"
+warnings = "deny"
+
+[lints.clippy]
+pedantic = "warn"
+nursery = "warn"
+
 [features]
 default = ["use_tower_sessions"]
 use_tower_sessions = ["dep:tower-sessions"]

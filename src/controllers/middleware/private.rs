@@ -157,12 +157,12 @@ mod tests {
     use axum_extra::extract::PrivateCookieJar;
     use axum_test::TestServer;
     use http::header::{HeaderValue, COOKIE};
+    use loco_rs::app::SharedStore;
     use loco_rs::config::{
         CacheConfig, Config, Database, InMemCacheConfig, Logger, Server, Workers,
     };
     use loco_rs::controller::middleware::{self, request_id::RequestId};
     use loco_rs::environment::Environment;
-    use loco_rs::app::SharedStore;
     use loco_rs::storage::Storage;
     use loco_rs::{cache, storage};
     use sea_orm::DatabaseConnection;

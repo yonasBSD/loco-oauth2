@@ -35,9 +35,9 @@ axum_session = ["dep:axum_session"]
 async-trait = "0.1"
 async-std = { version = "1", features = ["attributes", "tokio1"] }
 axum = "0.8"
-axum-extra = { version = "0.10", features = ["cookie", "cookie-private"] }
+axum-extra = { version = "0.12", features = ["cookie", "cookie-private"] }
 # axum session (optional, enabled by default)
-axum_session = { version = "0.16", optional = true }
+axum_session = { version = "0.17", optional = true }
 # tower-sessions (optional, enabled with use_tower_sessions feature)
 tower-sessions = { version = "0.14", optional = true }
 cookie = { version = "0.18", features = ["private"] }
@@ -70,6 +70,6 @@ features = [
     "runtime-tokio-rustls", # `ASYNC_RUNTIME` feature
 ]
 [dev-dependencies]
-axum-test = "17.2"
+axum-test = "18"
 serde_urlencoded = "0.7.1"
 wiremock = "0.6"

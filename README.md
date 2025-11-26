@@ -50,7 +50,7 @@ Or Cargo.toml
 
 ```toml
 [workspace.dependencies]
-loco-oauth2 = { version = "0.4" }
+loco-oauth2 = { version = "0.5" }
 
 [dependencies]
 loco-oauth2 = { workspace = true }
@@ -74,19 +74,19 @@ This library supports two session management backends through feature flags:
 **Default (tower-sessions):**
 ```toml
 [dependencies]
-loco-oauth2 = "0.4"
+loco-oauth2 = "0.5"
 ```
 
 **With axum-session:**
 ```toml
 [dependencies]
-loco-oauth2 = { version = "0.4", features = ["axum_session"], default-features = false }
+loco-oauth2 = { version = "0.5", features = ["axum_session"], default-features = false }
 ```
 
 **Explicit tower-sessions:**
 ```toml
 [dependencies]
-loco-oauth2 = { version = "0.4", features = ["use_tower_sessions"] }
+loco-oauth2 = { version = "0.5", features = ["use_tower_sessions"] }
 ```
 
 ### Migration Between Features

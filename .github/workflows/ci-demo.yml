@@ -1,11 +1,11 @@
-name: examples/demo_0_15
+name: examples/demo_0_16_tower_sessions
 
 on:
   push:
     branches:
       - master
     paths:
-      - examples/demo_0_15/**
+      - examples/demo_0_16_tower_sessions/**
   pull_request:
     branches:
       - master
@@ -32,7 +32,7 @@ jobs:
           override: true
           components: rustfmt
       - run: cargo fmt --all -- --check
-        working-directory: ./examples/demo_0_15
+        working-directory: ./examples/demo_0_16_tower_sessions
 
   clippy:
     name: Run Clippy
@@ -50,11 +50,12 @@ jobs:
           profile: ${{ env.TOOLCHAIN_PROFILE }}
           toolchain: ${{ env.RUST_TOOLCHAIN }}
           override: true
+          components: clippy
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
       - name: Run cargo clippy
-        run: cargo clippy -- -W clippy::nursery -W clippy::pedantic -W rust-2018-idioms -W rust-2021-compatibility
-        working-directory: ./examples/demo_0_15
+        run: cargo clippy 
+        working-directory: ./examples/demo_0_16_tower_sessions
   
   test:
     name: Run Tests
@@ -74,4 +75,4 @@ jobs:
         uses: Swatinem/rust-cache@v2
       - name: Run cargo test
         run: cargo test --all-features --all
-        working-directory: ./examples/demo_0_15
+        working-directory: ./examples/demo_0_16_tower_sessions
